@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
+using Owin.Security.Providers.Steam;
 using Owin;
 using MySteamPlay.Models;
 
@@ -44,6 +45,14 @@ namespace MySteamPlay
             // Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+
+            // Steam Key
+            var options = new SteamAuthenticationOptions
+            {
+                ApplicationKey = "AF8461EDF5817463B5E69E013DBF84AB",
+                CallbackPath = new PathString("/oauth-redirect/steam")
+            };
+            app.UseSteamAuthentication(options);
 
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(
