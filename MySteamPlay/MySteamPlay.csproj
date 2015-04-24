@@ -178,19 +178,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DatabaseController.cs" />
+    <Compile Include="Controllers\GameListsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GameDescrip.cs" />
+    <Compile Include="Models\GameList.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\LibraryItem.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\TagItem.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\TagList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -264,6 +267,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\GameLists\Create.cshtml" />
+    <Content Include="Views\GameLists\Delete.cshtml" />
+    <Content Include="Views\GameLists\Details.cshtml" />
+    <Content Include="Views\GameLists\Edit.cshtml" />
+    <Content Include="Views\GameLists\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
