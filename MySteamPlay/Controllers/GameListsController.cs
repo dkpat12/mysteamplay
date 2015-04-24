@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MySteamPlay.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MySteamPlay.Controllers
 {
@@ -37,7 +38,21 @@ namespace MySteamPlay.Controllers
         // GET: GameLists/Create
         public ActionResult Create()
         {
-            return View();
+            string currentUserID = User.Identity.GetUserId();
+            ApplicationUser currentUser = Database.Users.Find(currentUserID);
+            string providerKey = currentUser.Logins.First().ProviderKey;
+
+            providerKey = providerKey.Substring(providerKey.Length - 17);
+
+            string json;
+            using (var client = new WebClient())
+            {
+                
+                json = client.DownloadString("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=AF8461EDF5817463B5E69E013DBF84AB&steamid="+providerKey+"&format=json");
+            }
+
+            string test = json;
+            return null;
         }
 
         // POST: GameLists/Create
