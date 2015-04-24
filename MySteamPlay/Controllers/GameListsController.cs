@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using MySteamPlay.Models;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
+using PortableSteam;
 
 namespace MySteamPlay.Controllers
 {
@@ -44,32 +46,46 @@ namespace MySteamPlay.Controllers
 
             providerKey = providerKey.Substring(providerKey.Length - 17);
 
-            string json;
-            using (var client = new WebClient())
+            SteamWebAPI.SetGlobalKey(Security.apiKey);
+
+            var identity = SteamIdentity.FromSteamID(Int64.Parse(providerKey));
+
+            var response = SteamWebAPI.General().IPlayerService().GetOwnedGames(identity).IncludeAppInfo().GetResponse();            
+
+            foreach(var res in response.Data.Games)
             {
+                TimeSpan timeSpan = res.PlayTimeTotal;
+
+                int totalHours = (int)timeSpan.TotalHours;
+
+                GameDescrip gameDesc = new GameDescrip()
+                {
+                    appID = res.AppID,
+                    playtime_forever = totalHours,
+                    userId = currentUserID
+                };
+
+                Game game = new Game();
+
+                if (res.Name != null)
+                {
+                    game.name = res.Name;
+                    game.appID = res.AppID;
+                }
+                else
+                {
+                    game.name = res.AppID.ToString();
+                    game.appID = res.AppID;
+                }
                 
-                json = client.DownloadString("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=AF8461EDF5817463B5E69E013DBF84AB&steamid="+providerKey+"&format=json");
+                gameDesc.Game = game;
+
+                Database.Games.Add(game);
+                Database.GDescriptions.Add(gameDesc);
             }
-
-            string test = json;
-            return null;
-        }
-
-        // POST: GameLists/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ID")] GameList gameList)
-        {
-            if (ModelState.IsValid)
-            {
-                Database.GLists.Add(gameList);
-                await Database.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            return View(gameList);
+            Database.SaveChanges();
+           
+            return RedirectToAction("Index");
         }
 
         // GET: GameLists/Edit/5
