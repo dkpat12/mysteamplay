@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace MySteamPlay.Models
 {
@@ -16,6 +17,12 @@ namespace MySteamPlay.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public ulong steamID { get; set; }      // unique identifier for this user's Steam account
+        public string personaName { get; set; } // after reviewing Steam API documentation, still not sure what this is
+        public string avatar { get; set; }      // ditto
+
+        public List<Game> GamesList { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -29,5 +36,15 @@ namespace MySteamPlay.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Game> Games { get; set; }
+
+        public DbSet<GameDescrip> GDescriptions { get; set; }
+
+        public DbSet<GameList> GLists { get; set; }
+
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<TagList> TagLists { get; set; }
     }
 }
