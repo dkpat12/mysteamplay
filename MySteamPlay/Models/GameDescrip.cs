@@ -14,7 +14,7 @@ namespace MySteamPlay.Models
         public string userComments { get; set; }    // comments by the owner
         public bool visible { get; set; }           // if true, game appears in owner's master list
 
-        public virtual TagList Tags { get; set; }
+        public virtual List<TagList> Tags { get; set; }
 
         public virtual Game Game { get; set; }
     }

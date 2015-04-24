@@ -14,5 +14,7 @@ namespace MySteamPlay.Models
         public string userID { get; set; }
 
         public virtual List<Tag> Tags { get; set; }
+
+        public virtual GameDescrip GameDescrip{ get; set; }
     }
 }
