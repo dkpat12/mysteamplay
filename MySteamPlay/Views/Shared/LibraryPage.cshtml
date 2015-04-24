@@ -1,0 +1,82 @@
+﻿@model List<mvcajaxinfinitescroll.Models.LibraryItem>
+@for each (var item in Model)
+{
+    <div style="height: 300px; background-color: #F3F3F3; margin-bottom: 30px;">
+        <div style="padding: 30px; 
+        font-size: 25px; color: #7b4f9d">@item.steamID</div>
+        <div style="padding-left: 30px; 
+        font-size: 18px;">appId: @item.appID</div>
+        <div style="padding-left: 30px; 
+        font-size: 18px;">playtime_forever: @item.playtimeForever</div>
+        <div style="padding-left: 30px; 
+        font-size: 18px;">userComments: @item.userComments $</div>
+    </div>
+}   
+
+
+@*MySteamPlay.Models.LibraryItem
+
+@{
+    ViewBag.Title = "LibraryPage";
+}
+
+<h2>LibraryPage</h2>
+
+<div>
+    <h4>LibraryItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.steamID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.steamID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.appID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.appID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.playtime_forever)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.playtime_forever)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userComments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.visible)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.visible)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sortOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sortOrder)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@
