@@ -108,9 +108,18 @@
       <HintPath>..\packages\Owin.Security.Providers.1.17.1\lib\net45\Owin.Security.Providers.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PortableSteam">
+      <HintPath>..\packages\SteamWebAPI.1.0.13\lib\portable-net45+wp8+win8\PortableSteam.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -192,6 +201,7 @@
     <Compile Include="Models\GameList.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Security.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

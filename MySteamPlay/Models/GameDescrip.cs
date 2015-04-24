@@ -8,11 +8,13 @@ namespace MySteamPlay.Models
     public class GameDescrip
     {
         public int ID { get; set; }
-        public ulong steamID { get; set; }          // foreign key from User, part of composite key
+        public string userId { get; set; }          
         public int appID { get; set; }              // foreign key from Game, part of composite key
         public int playtime_forever { get; set; }   // all the time the owner has ever spent playing this game
         public string userComments { get; set; }    // comments by the owner
         public bool visible { get; set; }           // if true, game appears in owner's master list
+
+        public virtual TagList Tags { get; set; }
 
         public virtual Game Game { get; set; }
     }
