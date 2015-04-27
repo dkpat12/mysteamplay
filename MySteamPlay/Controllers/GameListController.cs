@@ -14,7 +14,7 @@ using PortableSteam;
 
 namespace MySteamPlay.Controllers
 {
-    public class GameListsController : DataBaseController
+    public class GameListController : DataBaseController
     {
         // GET: GameLists
         public async Task<ActionResult> Index()
@@ -62,7 +62,8 @@ namespace MySteamPlay.Controllers
                 {
                     appID = res.AppID,
                     playtime_forever = totalHours,
-                    userId = currentUserID
+                    userId = currentUserID,
+                    visible = true //True by default for now. 
                 };
 
                 Game game = new Game();
@@ -71,11 +72,17 @@ namespace MySteamPlay.Controllers
                 {
                     game.name = res.Name;
                     game.appID = res.AppID;
+                    game.img_header_url = "http://cdn.akamai.steamstatic.com/steam/apps/" + res.AppID + "/header.jpg";
+                    game.img_icon_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.IconUrl + ".jpg";
+                    game.img_logo_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.LogoUrl + ".jpg";
                 }
                 else
                 {
                     game.name = res.AppID.ToString();
                     game.appID = res.AppID;
+                    game.img_header_url = "http://cdn.akamai.steamstatic.com/steam/apps/" + res.AppID + "/header.jpg";
+                    game.img_icon_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.IconUrl + ".jpg";
+                    game.img_logo_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.LogoUrl + ".jpg";
                 }
                 
                 gameDesc.Game = game;
