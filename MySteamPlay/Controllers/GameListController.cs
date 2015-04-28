@@ -17,7 +17,7 @@ namespace MySteamPlay.Controllers
     public class GameListController : DataBaseController
     {
         // GET: GameLists
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             string currentUserID = User.Identity.GetUserId();
 
@@ -65,8 +65,10 @@ namespace MySteamPlay.Controllers
 
             var identity = SteamIdentity.FromSteamID(Int64.Parse(providerKey));
 
+            //JSON response from Steam 
             var response = SteamWebAPI.General().IPlayerService().GetOwnedGames(identity).IncludeAppInfo().GetResponse();            
 
+            //Iterate through each item and add it to database
             foreach(var res in response.Data.Games)
             {
                 TimeSpan timeSpan = res.PlayTimeTotal;
@@ -99,11 +101,33 @@ namespace MySteamPlay.Controllers
                     game.img_icon_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.IconUrl + ".jpg";
                     game.img_logo_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.LogoUrl + ".jpg";
                 }
-                
-                gameDesc.Game = game;
 
-                Database.Games.Add(game);
-                Database.GDescriptions.Add(gameDesc);
+                //Ensure User entry for game doesn't exist in table
+                bool doesLibraryExist = ( Database.GDescriptions.Any(u => u.userId.Equals(gameDesc.userId)) &&
+                    Database.GDescriptions.Any(a => a.appID.Equals(game.appID))); //AppID
+                //Ensure Game doesn't already exist in game table
+                bool doesGameExist = Database.Games.Any(a => a.appID.Equals(game.appID));
+
+                if (doesLibraryExist)
+                {
+                    // Do nothing
+                }
+                else
+                {
+                    if (doesGameExist)
+                    {
+                        //COME BACK TO MEEE
+                        gameDesc.Game = null;
+                    }
+                    else
+                    {
+                        gameDesc.Game = Database.Games.Where(a => a.appID == game.appID).SingleOrDefault(); ;
+                        Database.Games.Add(game);
+                    }
+                    //Add User Record for game
+                    Database.GDescriptions.Add(gameDesc);
+                }
+
             }
             Database.SaveChanges();
            

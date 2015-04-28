@@ -6,9 +6,9 @@
 
 <h2>@Html.ViewBag.Title</h2>
 
-<button class="btn btn-default">
-    @Html.ActionLink("Update Owned Games", "Create")
-</button>
+
+    @Html.ActionLink("Update Owned Games", "Create", new { }, new { @class = "btn btn-primary" })
+
 <table class="table">
     <tr>
         <th>My Steam Games</th>

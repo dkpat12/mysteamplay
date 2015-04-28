@@ -13,6 +13,6 @@ namespace MySteamPlay.Models
 
         public string tagName { get; set; }     // a description for a game, e.g. multiplayer, the genre, etc.
 
-        public virtual TagList MyProperty { get; set; }
+        public virtual TagList TagList { get; set; }
     }
 }
