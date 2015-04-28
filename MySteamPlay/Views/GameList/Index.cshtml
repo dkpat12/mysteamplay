@@ -1,26 +1,37 @@
-﻿@model IEnumerable<MySteamPlay.Models.GameList>
+﻿@model IEnumerable<MySteamPlay.Models.GameListViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Game List";
 }
 
-<h2>Index</h2>
+<h2>@Html.ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<button class="btn btn-default">
+    @Html.ActionLink("Update Owned Games", "Create")
+</button>
 <table class="table">
     <tr>
-        <th></th>
+        <th>My Steam Games</th>
     </tr>
-
-@foreach (var item in Model) {
     <tr>
-        <td>
+        <td>@Html.DisplayNameFor(model => model.LogoUrl)</td>
+        <td>@Html.DisplayNameFor(model => model.Name)</td>
+        <td>@Html.DisplayNameFor(model => model.Comment)</td>
+        <td>@Html.DisplayNameFor(model => model.Playtime)</td>
+    </tr>
+@foreach (var item in Model) {
+
+    <tr>
+        <td><img src="@Html.DisplayFor(modelItem => item.LogoUrl)" class="img-responsive" /></td>
+        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+        <td>@Html.DisplayFor(modelItem => item.Comment)</td>
+        <td>@Html.DisplayFor(modelItem => item.Playtime)</td>
+
+        @*<td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
+        </td>*@
     </tr>
 }
 

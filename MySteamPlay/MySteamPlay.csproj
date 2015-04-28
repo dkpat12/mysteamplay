@@ -199,6 +199,7 @@
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameDescrip.cs" />
     <Compile Include="Models\GameList.cs" />
+    <Compile Include="Models\GameListViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Security.cs" />

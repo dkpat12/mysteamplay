@@ -17,9 +17,24 @@ namespace MySteamPlay.Controllers
     public class GameListController : DataBaseController
     {
         // GET: GameLists
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await Database.GLists.ToListAsync());
+            string currentUserID = User.Identity.GetUserId();
+
+            //Returned data must fit into GameListViewModel
+            var GameQuery = from gdesc in Database.GDescriptions
+                            join game in Database.Games on gdesc.appID equals game.appID
+                            where gdesc.userId == currentUserID
+                            select new GameListViewModel {
+                                Name = game.name, 
+                                LogoUrl = game.img_logo_url,
+                                IconUrl = game.img_icon_url, 
+                                Playtime = gdesc.playtime_forever, 
+                                UserId = gdesc.userId,
+                                Comment = gdesc.userComments
+                            };
+
+            return View(GameQuery);
         }
 
         // GET: GameLists/Details/5
