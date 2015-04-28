@@ -38,18 +38,15 @@
         @RenderBody()
         <hr />
     </div>
-        <footer class="panel-footer">
-            <ul class="nav navbar-nav navbar-left"
+        <footer class="container">
+            <ul class="nav nav-pills n">
                 <li>@Html.ActionLink("Disclaimer", "Disclaimer", "Home")</li>
                 <li>@Html.ActionLink("About Us", "About", "Home")</li>
                 <li>@Html.ActionLink("Frequently Asked Questions - FAQ", "Faq", "Home")</li>
-                <li>Powered by <a href="http://store.steampowered.com/">Steam</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>&copy; @DateTime.Now.Year - My Steam Play Application</li>
+                <li><a href="http://steampowered.com/">Powered by Steam</a></li>
+                <li class="pull-right">&copy; @DateTime.Now.Year - My Steam Play</li>
             </ul>
         </footer>
-    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
