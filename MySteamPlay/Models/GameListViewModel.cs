@@ -13,5 +13,6 @@ namespace MySteamPlay.Models
         public string Comment { get; set; }
         public string UserId { get; set; }
         public int Playtime { get; set; }
+        public int AppId { get; set; }
     }
 }

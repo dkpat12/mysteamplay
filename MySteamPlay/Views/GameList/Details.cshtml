@@ -1,4 +1,4 @@
-﻿@model MySteamPlay.Models.GameList
+﻿@model MySteamPlay.Models.GameListViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -10,9 +10,11 @@
     <h4>GameList</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>@Html.DisplayFor(model => Model.Name)</dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AppId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

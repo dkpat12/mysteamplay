@@ -19,6 +19,7 @@ namespace MySteamPlay.Controllers
         // GET: GameLists
         public async Task<ActionResult> Index()
         {
+            // TODO Error Handling for when user is not logged in
             string currentUserID = User.Identity.GetUserId();
 
             //Returned data must fit into GameListViewModel
@@ -29,27 +30,49 @@ namespace MySteamPlay.Controllers
                                 Name = game.name, 
                                 LogoUrl = game.img_logo_url,
                                 IconUrl = game.img_icon_url, 
-                                Playtime = gdesc.playtime_forever, 
+                                Playtime = gdesc.playtime_forever,
+                                Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
-                                Comment = gdesc.userComments
+                                AppId = game.appID
                             };
 
             return View(GameQuery);
         }
 
         // GET: GameLists/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> Details(int id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GameList gameList = await Database.GLists.FindAsync(id);
-            if (gameList == null)
+
+            // TODO Error Handling for when user is not logged in
+            string currentUserID = User.Identity.GetUserId();
+            Game selectedGame = await Database.Games.FindAsync(id);
+            if (selectedGame == null)
             {
                 return HttpNotFound();
             }
-            return View(gameList);
+
+             var GameQuery = from gdesc in Database.GDescriptions
+                            join game in Database.Games on gdesc.appID equals game.appID
+                            where gdesc.userId == currentUserID && 
+                                  gdesc.appID == id
+                            select new GameListViewModel
+                            {
+                                Name = game.name,
+                                LogoUrl = game.img_logo_url,
+                                IconUrl = game.img_icon_url,
+                                Playtime = gdesc.playtime_forever,
+                                Comment = gdesc.userComments,
+                                UserId = gdesc.userId,
+                                AppId = game.appID
+                            };
+
+             GameListViewModel foundGame = GameQuery.Single();
+
+            return View(foundGame);
         }
 
         // GET: GameLists/Create
