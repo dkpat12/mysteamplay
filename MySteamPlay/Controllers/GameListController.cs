@@ -139,12 +139,13 @@ namespace MySteamPlay.Controllers
                 {
                     if (doesGameExist)
                     {
-                        //COME BACK TO MEEE
-                        gameDesc.Game = null;
+                        //Add existing game object
+                        gameDesc.Game = Database.Games.Where(a => a.appID == game.appID).SingleOrDefault();
                     }
                     else
                     {
-                        gameDesc.Game = Database.Games.Where(a => a.appID == game.appID).SingleOrDefault(); ;
+                        //add newly created game object
+                        gameDesc.Game = game;
                         Database.Games.Add(game);
                     }
                     //Add User Record for game
