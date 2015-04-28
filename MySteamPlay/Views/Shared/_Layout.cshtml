@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - My Steam Play</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -22,12 +22,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Game List", "Index", "GameLists")</li>
-                    <li>@Html.ActionLink("Account Settings", "Index", "Manage")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Game List", "Index", "GameLists")</li>
+                        <li>@Html.ActionLink("Game List", "Index", "GameList")</li>
+					    <li>@Html.ActionLink("Account Settings", "Index", "Manage")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

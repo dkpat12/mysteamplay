@@ -2747,6 +2747,13 @@
             replacing "APPID" and "IMG_ICON_URL" as necessary.
             </summary>
         </member>
+        <member name="P:PortableSteam.Interfaces.General.IPlayerService.GetOwnedGamesResponseGame.LogoUrl">
+            <summary>
+            The program icon's file name, 
+            accessible at: http://media.steampowered.com/steamcommunity/public/images/apps/APPID/IMG_LOGO_URL.jpg, 
+            replacing "APPID" and "IMG_ICON_URL" as necessary.
+            </summary>
+        </member>
         <member name="P:PortableSteam.Interfaces.General.IPlayerService.GetOwnedGamesResponseGame.HasCommunityVisibleStats">
             <summary>
             Whether the program has stats accessible via GetUserStatsForGame and GetGlobalStatsForGame.
