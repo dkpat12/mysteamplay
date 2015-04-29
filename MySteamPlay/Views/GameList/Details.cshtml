@@ -6,7 +6,7 @@
 
 <h2>Game Details</h2>
 <br />
-<p> <h3 class="text-center">@Html.DisplayFor(model => Model.Name)</h3> </p>
+<p> <h3 class="text-center">@Html.DisplayFor(model => Model.Name)</h3> </p><br />
 
 <div class="container">
     <div class="row">
@@ -18,11 +18,17 @@
             <div class="col-md-6">
                 <strong>Total time playing: </strong>@Html.DisplayFor(model => model.Playtime) <strong> hours</strong> <br />
                 <br />
-                <strong></strong>
 
+                <strong>Hide this game from Main List? &nbsp;&nbsp;&nbsp;</strong>
+                <input id="toggle-event" type="checkbox" data-toggle="toggle">
+                <div id="console-event"></div>
+                (This does not delete your game and can be undone in the future.)<br />
+                <br />
+                
 
                 <strong>Tags: </strong><br />
                 <br />
+                    <a class="btn btn-lg" href="#" role="button"><strong>LAUNCH @Html.DisplayFor(model => Model.Name)</strong></a>
             </div>
         </div>
     <div class="row">
@@ -90,3 +96,12 @@
 
 
 </div>
+
+
+<script>
+    $(function () {
+        $('#toggle-event').change(function () {
+            $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+        })
+    })
+</script>

@@ -27,7 +27,7 @@
                     @foreach (var account in Model.CurrentLogins)
                     {
                         <tr>
-                            <td>@account.LoginProvider</td>
+                            <td class="LoginProvider" style="font-size:x-large"><strong>@account.LoginProvider</strong></td>
                             <td>
                                 @if (ViewBag.ShowRemoveButton)
                                 {
