@@ -27,17 +27,19 @@ namespace MySteamPlay.Controllers
                             join game in Database.Games on gdesc.appID equals game.appID
                             join taglist in Database.TagLists on gdesc.Tags.ID equals taglist.ID
                             where gdesc.userId == currentUserID
-                            select new GameListViewModel {
-                                Name = game.name, 
+                            select new GameListViewModel
+                            {
+                                Name = game.name,
                                 LogoUrl = game.img_logo_url,
-                                IconUrl = game.img_icon_url, 
+                                IconUrl = game.img_icon_url,
                                 Playtime = gdesc.playtime_forever,
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
                                 AppId = game.appID,
                                 GameDescId = gdesc.ID,
                                 Visible = gdesc.visible,
-                                Tags = taglist
+                                GameTags = taglist,
+                                AllTags = Database.Tags.ToList()
                             };
 
             return View(GameQuery);
@@ -59,10 +61,10 @@ namespace MySteamPlay.Controllers
                 return HttpNotFound();
             }
 
-             var GameQuery = from gdesc in Database.GDescriptions
+            var GameQuery = from gdesc in Database.GDescriptions
                             join game in Database.Games on gdesc.appID equals game.appID
                             join taglist in Database.TagLists on gdesc.Tags.ID equals taglist.ID
-                            where gdesc.userId == currentUserID && 
+                            where gdesc.userId == currentUserID &&
                                   gdesc.appID == id
                             select new GameListViewModel
                             {
@@ -75,10 +77,11 @@ namespace MySteamPlay.Controllers
                                 AppId = game.appID,
                                 GameDescId = gdesc.ID,
                                 Visible = gdesc.visible,
-                                Tags = taglist
+                                GameTags = taglist,
+                                AllTags = Database.Tags.ToList()
                             };
 
-             GameListViewModel foundGame = GameQuery.Single();
+            GameListViewModel foundGame = GameQuery.Single();
 
             return View(foundGame);
         }
@@ -97,10 +100,10 @@ namespace MySteamPlay.Controllers
             var identity = SteamIdentity.FromSteamID(Int64.Parse(providerKey));
 
             //JSON response from Steam 
-            var response = SteamWebAPI.General().IPlayerService().GetOwnedGames(identity).IncludeAppInfo().GetResponse();            
+            var response = SteamWebAPI.General().IPlayerService().GetOwnedGames(identity).IncludeAppInfo().GetResponse();
 
             //Iterate through each item and add it to database
-            foreach(var res in response.Data.Games)
+            foreach (var res in response.Data.Games)
             {
                 TimeSpan timeSpan = res.PlayTimeTotal;
 
@@ -137,7 +140,7 @@ namespace MySteamPlay.Controllers
                 game.img_logo_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.LogoUrl + ".jpg";
 
                 //Ensure User entry for game doesn't exist in table
-                bool doesLibraryExist = ( Database.GDescriptions.Any(u => u.userId.Equals(gameDesc.userId)) &&
+                bool doesLibraryExist = (Database.GDescriptions.Any(u => u.userId.Equals(gameDesc.userId)) &&
                     Database.GDescriptions.Any(a => a.appID.Equals(game.appID))); //AppID
                 //Ensure Game doesn't already exist in game table
                 bool doesGameExist = Database.Games.Any(a => a.appID.Equals(game.appID));
@@ -166,7 +169,7 @@ namespace MySteamPlay.Controllers
             }
             currentUser.GameCount = response.Data.GameCount;
             Database.SaveChanges();
-           
+
             return RedirectToAction("Index");
         }
 
@@ -185,12 +188,24 @@ namespace MySteamPlay.Controllers
             }
 
             string currentUserID = User.Identity.GetUserId();
+
+            var currTagList = selectedGame.GameDescriptions.Where(i => i.userId == currentUserID).FirstOrDefault().Tags;
+
+            List<int> tags = new List<int>();
+
+            if (currTagList != null)
+            {
+                foreach (var item in currTagList.Tags)
+                {
+                    tags.Add(item.tagID);
+                }
+            }
             var GameQuery = from gdesc in Database.GDescriptions
                             join game in Database.Games on gdesc.appID equals game.appID
                             join taglist in Database.TagLists on gdesc.Tags.ID equals taglist.ID
                             where gdesc.userId == currentUserID &&
                                   gdesc.appID == id
-                            select new GameListViewModel
+                            select new EditGameListViewModel
                             {
                                 Name = game.name,
                                 LogoUrl = game.img_logo_url,
@@ -201,10 +216,11 @@ namespace MySteamPlay.Controllers
                                 AppId = game.appID,
                                 GameDescId = gdesc.ID,
                                 Visible = gdesc.visible,
-                                Tags = taglist
+                                AllTags = Database.Tags.ToList(),
+                                GameTagIds = tags
                             };
 
-            GameListViewModel foundGame = GameQuery.Single();
+            EditGameListViewModel foundGame = GameQuery.Single();
 
             return View(foundGame);
         }
@@ -214,14 +230,32 @@ namespace MySteamPlay.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(GameListViewModel editGame)
+        public async Task<ActionResult> Edit(EditGameListViewModel editGame)
         {
             if (ModelState.IsValid)
             {
                 string currentUserID = User.Identity.GetUserId();
                 GameDescrip editedGame = Database.GDescriptions.Where(x => x.userId == currentUserID && x.appID == editGame.AppId).Single();
                 editedGame.userComments = editGame.Comment;
-                 await Database.SaveChangesAsync();
+
+                List<Tag> tags = new List<Tag>();
+
+                foreach (var item in editGame.GameTagIds)
+                {
+                    tags.Add(Database.Tags.Find(item));
+                }
+
+                TagList taglist = new TagList()
+                {
+                    appID = editGame.AppId,
+                    userID = currentUserID,
+                    Tags = tags
+                };
+
+                editedGame.Tags = taglist;
+
+                Database.Entry(editedGame).State = EntityState.Modified;
+                await Database.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
