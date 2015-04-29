@@ -271,7 +271,7 @@ namespace MySteamPlay.Controllers
                 Database.Entry(editedGame).State = EntityState.Modified;
                 await Database.SaveChangesAsync();
 
-                return View(editGame);
+                return RedirectToAction("Details");
             }
             return View(editGame);
         }

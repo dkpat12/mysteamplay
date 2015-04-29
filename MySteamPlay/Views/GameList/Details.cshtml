@@ -24,11 +24,11 @@
                 <strong>Total time playing: </strong>@Html.DisplayFor(model => model.Playtime) <strong> hours</strong> <br />
                 <br />
 
-                <strong>Hide this game from Main List? &nbsp;&nbsp;&nbsp;</strong>
-                @*@<input id="toggle-event" type="checkbox" data-toggle="toggle">
-                <div id="console-event"></div>
-                (This does not delete your game and can be undone in the future.)<br />
-                <br />*@
+                @*<strong>Hide this game from Main List? &nbsp;&nbsp;&nbsp;</strong>
+    <input id="toggle-event" type="checkbox" data-toggle="toggle">
+    <div id="console-event"></div>
+    (This does not delete your game and can be undone in the future.)<br />
+    <br />*@
                 
                 <strong>Tags: </strong><br />
                 <br />
@@ -43,7 +43,6 @@
     <div class="row">
         <div class="col-md-5">
             <div class="container" style="max-width: 450px;">
-                <form role="form">
                     @foreach (var tag in Model.AllTags)
                     {
                         <div class="col-md-4">
@@ -59,7 +58,6 @@
                             <label>@tag.tagName</label>
                         </div>
                     }
-                </form>
             </div>
         </div>
         <div class="col-md-1"></div>
@@ -87,6 +85,9 @@
 }
 
 
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+}
 <script>
     $(function () {
         $('#toggle-event').change(function () {
