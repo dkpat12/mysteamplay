@@ -41,7 +41,7 @@ namespace MySteamPlay.Controllers
         }
 
         // GET: GameLists/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -69,7 +69,8 @@ namespace MySteamPlay.Controllers
                                 Playtime = gdesc.playtime_forever,
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
-                                AppId = game.appID
+                                AppId = game.appID,
+                                GameDescId = gdesc.ID
                             };
 
              GameListViewModel foundGame = GameQuery.Single();
@@ -155,6 +156,7 @@ namespace MySteamPlay.Controllers
                 }
 
             }
+            currentUser.GameCount = response.Data.GameCount;
             Database.SaveChanges();
            
             return RedirectToAction("Index");
@@ -167,12 +169,33 @@ namespace MySteamPlay.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GameList gameList = await Database.GLists.FindAsync(id);
-            if (gameList == null)
+            Game selectedGame = await Database.Games.FindAsync(id);
+
+            if (selectedGame == null)
             {
                 return HttpNotFound();
             }
-            return View(gameList);
+
+            string currentUserID = User.Identity.GetUserId();
+            var GameQuery = from gdesc in Database.GDescriptions
+                            join game in Database.Games on gdesc.appID equals game.appID
+                            where gdesc.userId == currentUserID &&
+                                  gdesc.appID == id
+                            select new GameListViewModel
+                            {
+                                Name = game.name,
+                                LogoUrl = game.img_logo_url,
+                                IconUrl = game.img_icon_url,
+                                Playtime = gdesc.playtime_forever,
+                                Comment = gdesc.userComments,
+                                UserId = gdesc.userId,
+                                AppId = game.appID,
+                                GameDescId = gdesc.ID
+                            };
+
+            GameListViewModel foundGame = GameQuery.Single();
+
+            return View(foundGame);
         }
 
         // POST: GameLists/Edit/5
@@ -180,16 +203,29 @@ namespace MySteamPlay.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID")] GameList gameList)
+        public async Task<ActionResult> Edit(GameListViewModel editGame)
         {
             if (ModelState.IsValid)
             {
-                Database.Entry(gameList).State = EntityState.Modified;
-                await Database.SaveChangesAsync();
+                string currentUserID = User.Identity.GetUserId();
+                GameDescrip editedGame = Database.GDescriptions.Where(x => x.userId == currentUserID && x.appID == editGame.AppId).Single();
+                editedGame.userComments = editGame.Comment;
+                Database.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-            return View(gameList);
+            return View(editGame);
         }
+        //public ActionResult Edit([Bind(Include = "Comment")] GameListViewModel editGame)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        Database.Entry(editGame).State = EntityState.Modified;
+        //        Database.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(editGame);
+        //}
 
         // GET: GameLists/Delete/5
         public async Task<ActionResult> Delete(int? id)
