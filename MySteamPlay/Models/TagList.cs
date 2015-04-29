@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,7 +15,5 @@ namespace MySteamPlay.Models
         public string userID { get; set; }
 
         public virtual List<Tag> Tags { get; set; }
-
-        public virtual GameDescrip GameDescrip{ get; set; }
     }
 }
