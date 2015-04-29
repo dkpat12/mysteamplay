@@ -55,10 +55,22 @@ namespace MySteamPlay.Controllers
 
             // TODO Error Handling for when user is not logged in
             string currentUserID = User.Identity.GetUserId();
+
             Game selectedGame = await Database.Games.FindAsync(id);
             if (selectedGame == null)
             {
                 return HttpNotFound();
+            }
+            var currTagList = selectedGame.GameDescriptions.Where(i => i.userId == currentUserID).FirstOrDefault().Tags;
+
+            List<int> tags = new List<int>();
+
+            if (currTagList != null)
+            {
+                foreach (var item in currTagList.Tags)
+                {
+                    tags.Add(item.tagID);
+                }
             }
 
             var GameQuery = from gdesc in Database.GDescriptions
@@ -66,7 +78,7 @@ namespace MySteamPlay.Controllers
                             join taglist in Database.TagLists on gdesc.Tags.ID equals taglist.ID
                             where gdesc.userId == currentUserID &&
                                   gdesc.appID == id
-                            select new GameListViewModel
+                            select new EditGameListViewModel
                             {
                                 Name = game.name,
                                 LogoUrl = game.img_logo_url,
@@ -76,12 +88,13 @@ namespace MySteamPlay.Controllers
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
                                 AppId = game.appID,
+                                GameDescId = gdesc.ID,
                                 Visible = gdesc.visible,
-                                GameTags = taglist,
-                                AllTags = Database.Tags.ToList()
+                                AllTags = Database.Tags.ToList(),
+                                GameTagIds = tags
                             };
 
-            GameListViewModel foundGame = GameQuery.Single();
+            EditGameListViewModel foundGame = GameQuery.Single();
 
             return View(foundGame);
         }
@@ -210,6 +223,7 @@ namespace MySteamPlay.Controllers
                                 Name = game.name,
                                 LogoUrl = game.img_logo_url,
                                 IconUrl = game.img_icon_url,
+                                HeaderUrl = game.img_header_url,
                                 Playtime = gdesc.playtime_forever,
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
@@ -230,7 +244,7 @@ namespace MySteamPlay.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(EditGameListViewModel editGame)
+        public async Task<ActionResult> Details(EditGameListViewModel editGame)
         {
             if (ModelState.IsValid)
             {
@@ -257,7 +271,7 @@ namespace MySteamPlay.Controllers
                 Database.Entry(editedGame).State = EntityState.Modified;
                 await Database.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                return View(editGame);
             }
             return View(editGame);
         }

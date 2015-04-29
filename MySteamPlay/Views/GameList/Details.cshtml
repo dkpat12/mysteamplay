@@ -1,4 +1,4 @@
-﻿@model MySteamPlay.Models.GameListViewModel
+﻿@model MySteamPlay.Models.EditGameListViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -8,6 +8,11 @@
 <br />
 <p> <h3 class="text-center">@Html.DisplayFor(model => Model.Name)</h3> </p><br />
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.AppId)
 <div class="container">
     <div class="row">
         <div class="col-md-1"></div>
@@ -20,15 +25,14 @@
                 <br />
 
                 <strong>Hide this game from Main List? &nbsp;&nbsp;&nbsp;</strong>
-                <input id="toggle-event" type="checkbox" data-toggle="toggle">
+                @*@<input id="toggle-event" type="checkbox" data-toggle="toggle">
                 <div id="console-event"></div>
                 (This does not delete your game and can be undone in the future.)<br />
-                <br />
+                <br />*@
                 
-
                 <strong>Tags: </strong><br />
                 <br />
-                    <a class="btn btn-lg" href="#" role="button"><strong>LAUNCH @Html.DisplayFor(model => Model.Name)</strong></a>
+                    <a class="btn btn-lg btn-primary" href="#" role="button"><strong>LAUNCH @Html.DisplayFor(model => Model.Name)</strong></a>
             </div>
         </div>
     <div class="row">
@@ -40,62 +44,47 @@
         <div class="col-md-5">
             <div class="container" style="max-width: 450px;">
                 <form role="form">
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 1
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 2
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 3
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 4
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 5
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 6
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 2
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 3
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 4
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 5
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" value="">Tag 6
-                    </label>
+                    @foreach (var tag in Model.AllTags)
+                    {
+                        <div class="col-md-4">
+
+                            @if (Model.GameTagIds.Contains(tag.tagID))
+                            {
+                                <input type="checkbox" name="GameTagIds" value=@tag.tagID checked="checked">
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="GameTagIds" value=@tag.tagID>
+                            }
+                            <label>@tag.tagName</label>
+                        </div>
+                    }
                 </form>
             </div>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-5">
-            <form>
-                <div class="form-group" style="min-width:260px; height:auto; text-align:center">
-                    <label for="commentsInput"><strong>Comments: </strong></label>
-                    <input type="text" class="form-control" rows="6" style="max-width:460px" id="commentsInput" placeholder="Leave your notes and comments to self here" />
+            <div class="form-group" style="min-width:260px; height:auto; text-align:center">
+                @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", @placeholder="Leave your notes and comments to self here" } })
+                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
                 </div>
-            </form>
+            </div>
         </div>
         <br /><br /><br />
     </div>
-
-    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
     <footer class="text-center" style="padding-top:30px">
         @Html.ActionLink("Edit", "Edit", new { id = Model.AppId }) |
         @Html.ActionLink("Back to List", "Index")
     </footer>
-
-
 </div>
+}
 
 
 <script>

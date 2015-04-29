@@ -15,13 +15,17 @@
 <div class="col-md-3">
     <h4>Tags</h4>
     <div class="pre-scrollable">
-        <form role="form"
-            @foreach (var tag in tags.AllTags)
+        <form role="form">
+            @if(tags == null) {
+
+            }
+            else {
+               foreach (var tag in tags.AllTags)
             {
                     <input type="checkbox" name="GameTagIds" value=@tag.tagID>
                     <label>@tag.tagName</label>
             }
-   
+            }
         </form>
     </div>
 </div>

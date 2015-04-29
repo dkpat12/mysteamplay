@@ -26,6 +26,7 @@ namespace MySteamPlay.Models
         public int AppId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
+        public string HeaderUrl { get; set; }    
         public string LogoUrl { get; set; }
         public string IconUrl { get; set; }
         public string Comment { get; set; }
