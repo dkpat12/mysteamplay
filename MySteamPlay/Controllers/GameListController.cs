@@ -67,7 +67,8 @@ namespace MySteamPlay.Controllers
                                 Playtime = gdesc.playtime_forever,
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
-                                AppId = game.appID
+                                AppId = game.appID,
+                                GameDescId = gdesc.ID
                             };
 
              GameListViewModel foundGame = GameQuery.Single();
@@ -186,7 +187,8 @@ namespace MySteamPlay.Controllers
                                 Playtime = gdesc.playtime_forever,
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
-                                AppId = game.appID
+                                AppId = game.appID,
+                                GameDescId = gdesc.ID
                             };
 
             GameListViewModel foundGame = GameQuery.Single();
@@ -199,17 +201,15 @@ namespace MySteamPlay.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "AppId,Comment,IconUrl,LogoUrl,Name,Playtime,UserId,Visible")] GameListViewModel editGame)
+        public async Task<ActionResult> Edit(GameListViewModel editGame)
         {
             if (ModelState.IsValid)
             {
+                string currentUserID = User.Identity.GetUserId();
+                GameDescrip editedGame = Database.GDescriptions.Where(x => x.userId == currentUserID && x.appID == editGame.AppId).Single();
+                editedGame.userComments = editGame.Comment;
+                Database.SaveChanges();
 
-                //var editedGame = Database.GDescriptions.Where(x => x.userId == Database.GDescriptions.userId && x.appID == Database.GDescriptions.appID).SingleOrDefault();
-                //editedGame.userComments = Database.GDescriptions.userComments;
-
-                Database.Entry(editGame).State = EntityState.Modified;
-
-                await Database.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(editGame);
