@@ -6,53 +6,87 @@
 
 <h2>Game Details</h2>
 <br />
-<p> <h4>@Html.DisplayFor(model => Model.Name)</h4> </p>
+<p> <h3 class="text-center">@Html.DisplayFor(model => Model.Name)</h3> </p>
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <img src="@Html.DisplayFor(model => model.HeaderUrl)" class="img-responsive" />
-        </div>
         <div class="col-md-1"></div>
-        <div class="col-md-7">
-            <strong>Total time playing: </strong>@Html.DisplayFor(model => model.Playtime) <strong> hours</strong> <br />
-            <strong>Tags: </strong>
+            <div class="col-md-4">
+                <img src="@Html.DisplayFor(model => model.HeaderUrl)" class="img-responsive" />
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <strong>Total time playing: </strong>@Html.DisplayFor(model => model.Playtime) <strong> hours</strong> <br />
+                <br />
+                <strong></strong>
+
+
+                <strong>Tags: </strong><br />
+                <br />
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-md-5">
+            <h4 class="text-center">Tags</h4>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <div class="pre-scrollable">
-                <h3>Tags</h3>
-                <ul>TagIt</ul>
-                <ul>TagIt</ul>
-                <ul>TagIt</ul>
-                <ul>TagIt</ul>
-                <ul>TagIt</ul>
-                <ul>TagIt</ul>
-                <ul>TagIt</ul>
-                <ul>TagIt</ul>
-                <ul>TagIt</ul>
+        <div class="col-md-5">
+            <div class="container" style="max-width: 450px;">
+                <form role="form">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 1
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 2
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 3
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 4
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 5
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 6
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 2
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 3
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 4
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 5
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="">Tag 6
+                    </label>
+                </form>
             </div>
         </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <form>
+                <div class="form-group" style="min-width:260px; height:auto; text-align:center">
+                    <label for="commentsInput"><strong>Comments: </strong></label>
+                    <input type="text" class="form-control" style="max-width:460px" id="commentsInput" placeholder="Leave your notes and comments to self here" />
+                </div>
+            </form>
+        </div>
+        <br /><br /><br />
     </div>
 
     
-
-
-
-
-
-
-
-
-
-
-
-
-    <p>
+    <footer class="text-center" style="padding-top:30px">
         @Html.ActionLink("Edit", "Edit", new { id = Model.AppId }) |
         @Html.ActionLink("Back to List", "Index")
-    </p>
+    </footer>
 
 
 </div>
