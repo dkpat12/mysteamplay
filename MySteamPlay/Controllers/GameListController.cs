@@ -29,7 +29,8 @@ namespace MySteamPlay.Controllers
                             select new GameListViewModel {
                                 Name = game.name, 
                                 LogoUrl = game.img_logo_url,
-                                IconUrl = game.img_icon_url, 
+                                IconUrl = game.img_icon_url,
+                                HeaderUrl = game.img_header_url,
                                 Playtime = gdesc.playtime_forever,
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
@@ -64,6 +65,7 @@ namespace MySteamPlay.Controllers
                                 Name = game.name,
                                 LogoUrl = game.img_logo_url,
                                 IconUrl = game.img_icon_url,
+                                HeaderUrl = game.img_header_url,
                                 Playtime = gdesc.playtime_forever,
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,

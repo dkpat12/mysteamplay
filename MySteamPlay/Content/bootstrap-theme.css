@@ -7333,3 +7333,23 @@ input[type="checkbox"]:disabled:checked:after,
 .carousel-caption h6 {
   color: inherit;
 }
+
+/*table.scrollTable {
+    width: 100%;
+}
+div.tableContainer table {
+    width: 756px;
+}
+tbody.scrollContent {
+    display: block;
+    height: 400px;
+    overflow: auto;
+    width: auto;
+}
+tbody {
+    vertical-align: middle;
+}*/
+
+.scrollableGameList.table {
+    padding:20px;
+}

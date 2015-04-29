@@ -14,5 +14,6 @@ namespace MySteamPlay.Models
         public string UserId { get; set; }
         public int Playtime { get; set; }
         public int AppId { get; set; }
+        public string HeaderUrl { get; set; }
     }
 }

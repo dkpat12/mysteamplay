@@ -4,17 +4,55 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Game Details</h2>
+<br />
+<p> <h4>@Html.DisplayFor(model => Model.Name)</h4> </p>
 
-<div>
-    <h4>GameList</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Name</dt>
-        <dd>@Html.DisplayFor(model => Model.Name)</dd>
-    </dl>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Html.DisplayFor(model => model.HeaderUrl)" class="img-responsive" />
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <strong>Total time playing: </strong>@Html.DisplayFor(model => model.Playtime) <strong> hours</strong> <br />
+            <strong>Tags: </strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="pre-scrollable">
+                <h3>Tags</h3>
+                <ul>TagIt</ul>
+                <ul>TagIt</ul>
+                <ul>TagIt</ul>
+                <ul>TagIt</ul>
+                <ul>TagIt</ul>
+                <ul>TagIt</ul>
+                <ul>TagIt</ul>
+                <ul>TagIt</ul>
+                <ul>TagIt</ul>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.AppId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AppId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

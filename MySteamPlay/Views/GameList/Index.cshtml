@@ -7,31 +7,63 @@
 <h2>@Html.ViewBag.Title</h2>
 
 
-    @Html.ActionLink("Update Owned Games", "Create", new { }, new { @class = "btn btn-primary" })
+@Html.ActionLink("Update Owned Games", "Create", new { }, new { @class = "btn btn-primary" })
 
-<table class="table">
-    <tr>
-        <th>My Steam Games</th>
-    </tr>
-    <tr>
-        <td>@Html.DisplayNameFor(model => model.LogoUrl)</td>
-        <td>@Html.DisplayNameFor(model => model.Name)</td>
-        <td>@Html.DisplayNameFor(model => model.Comment)</td>
-        <td>@Html.DisplayNameFor(model => model.Playtime)</td>
-    </tr>
-@foreach (var item in Model) {
+<div id="sidebar-wrapper" class="pre-scrollable">
+    <h2>Tags</h2>
+        <ul class="sidebar-nav">
+            <li>Tag 1</li>
+            <li>Tag 2</li>
+            <li>Tag 3</li>
+            <li>Tag 1</li>
+            <li>Tag 2</li>
+            <li>Tag 3</li>
+            <li>Tag 1</li>
+            <li>Tag 2</li>
+            <li>Tag 3</li>
+            <li>Tag 1</li>
+            <li>Tag 2</li>
+            <li>Tag 3</li>
+            <li>Tag 1</li>
+            <li>Tag 2</li>
+            <li>Tag 3</li>
+            <li>Tag 1</li>
+            <li>Tag 2</li>
+            <li>Tag 3</li>
+        </ul>
+</div>
 
-    <tr>
-        <td><img src="@Html.DisplayFor(modelItem => item.LogoUrl)" class="img-responsive" /></td>
-        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-        <td>@Html.DisplayFor(modelItem => item.Comment)</td>
-        <td>@Html.DisplayFor(modelItem => item.Playtime)</td>
 
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AppId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AppId })
-        </td>
-    </tr>
-}
+<div class="pre-scrollable">
+    <div class="scrollableGameList">
+        <table class="table">
+            <tr>
+                <th><h2>My Steam Games</h2></th>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.LogoUrl)</td>
+                <td>@Html.DisplayNameFor(model => model.Name)</td>
+                <td>@Html.DisplayNameFor(model => model.Comment)</td>
+                <td>@Html.DisplayNameFor(model => model.Playtime)</td>
+            </tr>
+            @foreach (var item in Model)
+            {
 
-</table>
+                <tr>
+                    <td><img src="@Html.DisplayFor(modelItem => item.LogoUrl)" class="img-responsive" /></td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Comment)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Playtime)</td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.AppId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.AppId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+
