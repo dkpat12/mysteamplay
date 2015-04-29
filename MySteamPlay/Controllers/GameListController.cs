@@ -199,16 +199,31 @@ namespace MySteamPlay.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Comment")] GameListViewModel editGame)
+        public async Task<ActionResult> Edit([Bind(Include = "AppId,Comment,IconUrl,LogoUrl,Name,Playtime,UserId,Visible")] GameListViewModel editGame)
         {
             if (ModelState.IsValid)
             {
+
+                //var editedGame = Database.GDescriptions.Where(x => x.userId == Database.GDescriptions.userId && x.appID == Database.GDescriptions.appID).SingleOrDefault();
+                //editedGame.userComments = Database.GDescriptions.userComments;
+
                 Database.Entry(editGame).State = EntityState.Modified;
+
                 await Database.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(editGame);
         }
+        //public ActionResult Edit([Bind(Include = "Comment")] GameListViewModel editGame)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        Database.Entry(editGame).State = EntityState.Modified;
+        //        Database.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(editGame);
+        //}
 
         // GET: GameLists/Delete/5
         public async Task<ActionResult> Delete(int? id)
