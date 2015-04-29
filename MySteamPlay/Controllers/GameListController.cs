@@ -40,7 +40,7 @@ namespace MySteamPlay.Controllers
         }
 
         // GET: GameLists/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -153,6 +153,7 @@ namespace MySteamPlay.Controllers
                 }
 
             }
+            currentUser.GameCount = response.Data.GameCount;
             Database.SaveChanges();
            
             return RedirectToAction("Index");

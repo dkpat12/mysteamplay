@@ -21,6 +21,7 @@ namespace MySteamPlay.Models
         public ulong SteamId { get; set; }      // unique identifier for this user's Steam account
         public string PersonaName { get; set; } // after reviewing Steam API documentation, still not sure what this is
         public string Avatar { get; set; }      // ditto
+        public int GameCount { get; set; }
 
         public List<Game> GamesList { get; set; }
     }
