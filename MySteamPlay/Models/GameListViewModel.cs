@@ -14,5 +14,7 @@ namespace MySteamPlay.Models
         public string UserId { get; set; }
         public int Playtime { get; set; }
         public int AppId { get; set; }
+        public bool Visible { get; set; }
+        public List<Tag> Tags { get; set; }
     }
 }
