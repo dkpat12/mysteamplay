@@ -37,7 +37,6 @@ namespace MySteamPlay.Controllers
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
                                 AppId = game.appID,
-                                GameDescId = gdesc.ID,
                                 Visible = gdesc.visible,
                                 GameTags = taglist,
                                 AllTags = Database.Tags.ToList()
@@ -77,7 +76,6 @@ namespace MySteamPlay.Controllers
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
                                 AppId = game.appID,
-                                GameDescId = gdesc.ID,
                                 Visible = gdesc.visible,
                                 GameTags = taglist,
                                 AllTags = Database.Tags.ToList()

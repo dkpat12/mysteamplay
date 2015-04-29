@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Game List";
+    var tags = Model.FirstOrDefault(); 
 }
 
 <h2>@Html.ViewBag.Title</h2>
@@ -14,124 +15,13 @@
 <div class="col-md-3">
     <h4>Tags</h4>
     <div class="pre-scrollable">
-        <form role="form">
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />RPG</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />ARPG</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Roguelike</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Tactical RPG</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Action</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Beat 'em Up and Hack 'n' Slash</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Platformer</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Fighting</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Stealth</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Shooter</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />Cover-Based Shooter</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="" />FPS</label>
-                </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Rail Shooter</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Sidescrolling Shooter</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Shoot 'em Up</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Tactical Shooter</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Third-Person Shooter</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Simulation</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Management Simulator</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Vehicle Simulator</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Life Simulator</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Puzzle</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Casual Fun</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Table Top</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Rhythm</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />CAdventure</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Point-and-Click</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Text-Based</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Visual Novel</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Horror</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Platformer</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Sandbox</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Strategy/Tactics</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Turn Based</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Real Time</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />MMO</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Sports</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Racing</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" value="" />Other</label>
-            </div>
+        <form role="form"
+            @foreach (var tag in tags.AllTags)
+            {
+                    <input type="checkbox" name="GameTagIds" value=@tag.tagID>
+                    <label>@tag.tagName</label>
+            }
+   
         </form>
     </div>
 </div>
