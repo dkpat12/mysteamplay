@@ -7350,6 +7350,18 @@ tbody {
     vertical-align: middle;
 }*/
 
-.scrollableGameList.table {
-    padding:20px;
+.container.pre-scrollable{
+    max-width: 300px;
+}
+*.pre-scrollable{
+    max-width: 2000px;
+    max-height: 600px;
+}
+.div.pre-scrollable.{
+    max-width: 1000px; 
+    width:auto;
+}
+.table.table{
+    max-height:600px;
+    width:auto; 
 }

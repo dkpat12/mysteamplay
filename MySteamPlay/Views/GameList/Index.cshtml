@@ -9,68 +9,175 @@
 
 @Html.ActionLink("Update Owned Games", "Create", new { }, new { @class = "btn btn-primary" })
 
-<div class="row">
-    <div class="col-xs-9">My Steam Games</div>
-    <div class="col-xs-4"><h2>Tags</h2><br></div>
-    <div class="col-xs-8">My Steam Games<br></div>
+
+<h3 class="myGameList" style="text-align:center">My Steam Games</h3>
+<div class="col-md-3">
+    <h4>Tags</h4>
+    <div class="pre-scrollable">
+        <form role="form">
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />RPG</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />ARPG</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Roguelike</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Tactical RPG</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Action</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Beat 'em Up and Hack 'n' Slash</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Platformer</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Fighting</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Stealth</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Shooter</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />Cover-Based Shooter</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="" />FPS</label>
+                </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Rail Shooter</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Sidescrolling Shooter</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Shoot 'em Up</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Tactical Shooter</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Third-Person Shooter</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Simulation</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Management Simulator</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Vehicle Simulator</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Life Simulator</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Puzzle</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Casual Fun</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Table Top</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Rhythm</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />CAdventure</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Point-and-Click</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Text-Based</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Visual Novel</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Horror</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Platformer</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Sandbox</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Strategy/Tactics</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Turn Based</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Real Time</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />MMO</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Sports</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Racing</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" value="" />Other</label>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="pre-scrollable">
+    <table class="table">
+        <tr>
+            <th></th>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.LogoUrl)</td>
+            <td>@Html.DisplayNameFor(model => model.Name)</td>
+            <td>@Html.DisplayNameFor(model => model.Comment)</td>
+            <td>@Html.DisplayNameFor(model => model.Playtime)</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td><img src="@Html.DisplayFor(modelItem => item.LogoUrl)" class="img-responsive" /></td>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Comment)</td>
+                <td>@Html.DisplayFor(modelItem => item.Playtime)</td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.AppId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.AppId })
+                </td>
+            </tr>
+        }
+
+    </table>
 </div>
 
 
 
-<div id="sidebar-wrapper" class="pre-scrollable">
-    <h2>Tags</h2>
-        <ul class="sidebar-nav pull-left">
-            <li>Tag 1</li>
-            <li>Tag 2</li>
-            <li>Tag 3</li>
-            <li>Tag 1</li>
-            <li>Tag 2</li>
-            <li>Tag 3</li>
-            <li>Tag 1</li>
-            <li>Tag 2</li>
-            <li>Tag 3</li>
-            <li>Tag 1</li>
-            <li>Tag 2</li>
-            <li>Tag 3</li>
-            <li>Tag 1</li>
-            <li>Tag 2</li>
-            <li>Tag 3</li>
-            <li>Tag 1</li>
-            <li>Tag 2</li>
-            <li>Tag 3</li>
-        </ul>
-</div>
+
+
+
+
+
 
 
 <div class="pre-scrollable">
     <div class="scrollableGameList">
-        <table class="table">
-            <tr>
-                <th><h2>My Steam Games</h2></th>
-            </tr>
-            <tr>
-                <td>@Html.DisplayNameFor(model => model.LogoUrl)</td>
-                <td>@Html.DisplayNameFor(model => model.Name)</td>
-                <td>@Html.DisplayNameFor(model => model.Comment)</td>
-                <td>@Html.DisplayNameFor(model => model.Playtime)</td>
-            </tr>
-            @foreach (var item in Model)
-            {
-
-                <tr>
-                    <td><img src="@Html.DisplayFor(modelItem => item.LogoUrl)" class="img-responsive" /></td>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Comment)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Playtime)</td>
-
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.AppId }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.AppId })
-                    </td>
-                </tr>
-            }
-
-        </table>
+        
     </div>
 </div>
 
