@@ -18,13 +18,37 @@
         <form role="form"
             @foreach (var tag in tags.AllTags)
             {
-                    <input type="checkbox" name="GameTagIds" value=@tag.tagID>
+                //added id and data-toggle
+                    <input id="toggle-event" type="checkbox" name="GameTagIds" value=@tag.tagID data-toggle="toggle">
+                //start nathan test code 1
+                <div id="console-event"></div>
+                <script>
+                    $(function () {
+                        $('#toggle-event').change(function () {
+                            $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+                        })
+                    })
+                </script>
+                //end nathan test code 1
+
                     <label>@tag.tagName</label>
             }
    
         </form>
     </div>
 </div>
+
+@*//start nathan test code 1
+<input id="toggle-event" type="checkbox" data-toggle="toggle" />
+<div id="console-event"></div>
+<script>
+    $(function () {
+        $('#toggle-event').change(function () {
+            $('#console-event').html('Toggle: ' + $(this).prop('checked'))
+        })
+    })
+</script>*@
+//end nathan test code 1
 
 <div class="pre-scrollable">
     <table class="table">
