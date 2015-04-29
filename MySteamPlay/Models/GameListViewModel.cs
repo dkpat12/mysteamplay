@@ -16,6 +16,6 @@ namespace MySteamPlay.Models
         public string Comment { get; set; }
         public int Playtime { get; set; }
         public bool Visible { get; set; }
-        public List<Tag> Tags { get; set; }
+        public TagList Tags { get; set; }
     }
 }

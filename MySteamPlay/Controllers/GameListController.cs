@@ -25,6 +25,7 @@ namespace MySteamPlay.Controllers
             //Returned data must fit into GameListViewModel
             var GameQuery = from gdesc in Database.GDescriptions
                             join game in Database.Games on gdesc.appID equals game.appID
+                            join taglist in Database.TagLists on gdesc.Tags.ID equals taglist.ID
                             where gdesc.userId == currentUserID
                             select new GameListViewModel {
                                 Name = game.name, 
@@ -33,7 +34,10 @@ namespace MySteamPlay.Controllers
                                 Playtime = gdesc.playtime_forever,
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
-                                AppId = game.appID
+                                AppId = game.appID,
+                                GameDescId = gdesc.ID,
+                                Visible = gdesc.visible,
+                                Tags = taglist
                             };
 
             return View(GameQuery);
@@ -57,6 +61,7 @@ namespace MySteamPlay.Controllers
 
              var GameQuery = from gdesc in Database.GDescriptions
                             join game in Database.Games on gdesc.appID equals game.appID
+                            join taglist in Database.TagLists on gdesc.Tags.ID equals taglist.ID
                             where gdesc.userId == currentUserID && 
                                   gdesc.appID == id
                             select new GameListViewModel
@@ -68,7 +73,9 @@ namespace MySteamPlay.Controllers
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
                                 AppId = game.appID,
-                                GameDescId = gdesc.ID
+                                GameDescId = gdesc.ID,
+                                Visible = gdesc.visible,
+                                Tags = taglist
                             };
 
              GameListViewModel foundGame = GameQuery.Single();
@@ -99,12 +106,19 @@ namespace MySteamPlay.Controllers
 
                 int totalHours = (int)timeSpan.TotalHours;
 
+                TagList tagList = new TagList()
+                {
+                    appID = res.AppID,
+                    userID = currentUserID
+                };
+
                 GameDescrip gameDesc = new GameDescrip()
                 {
                     appID = res.AppID,
                     playtime_forever = totalHours,
                     userId = currentUserID,
-                    visible = true //True by default for now. 
+                    visible = true, //True by default for now.
+                    Tags = tagList
                 };
 
                 Game game = new Game();
@@ -112,19 +126,15 @@ namespace MySteamPlay.Controllers
                 if (res.Name != null)
                 {
                     game.name = res.Name;
-                    game.appID = res.AppID;
-                    game.img_header_url = "http://cdn.akamai.steamstatic.com/steam/apps/" + res.AppID + "/header.jpg";
-                    game.img_icon_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.IconUrl + ".jpg";
-                    game.img_logo_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.LogoUrl + ".jpg";
                 }
                 else
                 {
                     game.name = res.AppID.ToString();
-                    game.appID = res.AppID;
-                    game.img_header_url = "http://cdn.akamai.steamstatic.com/steam/apps/" + res.AppID + "/header.jpg";
-                    game.img_icon_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.IconUrl + ".jpg";
-                    game.img_logo_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.LogoUrl + ".jpg";
                 }
+                game.appID = res.AppID;
+                game.img_header_url = "http://cdn.akamai.steamstatic.com/steam/apps/" + res.AppID + "/header.jpg";
+                game.img_icon_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.IconUrl + ".jpg";
+                game.img_logo_url = "http://media.steampowered.com/steamcommunity/public/images/apps/" + res.AppID + "/" + res.LogoUrl + ".jpg";
 
                 //Ensure User entry for game doesn't exist in table
                 bool doesLibraryExist = ( Database.GDescriptions.Any(u => u.userId.Equals(gameDesc.userId)) &&
@@ -177,6 +187,7 @@ namespace MySteamPlay.Controllers
             string currentUserID = User.Identity.GetUserId();
             var GameQuery = from gdesc in Database.GDescriptions
                             join game in Database.Games on gdesc.appID equals game.appID
+                            join taglist in Database.TagLists on gdesc.Tags.ID equals taglist.ID
                             where gdesc.userId == currentUserID &&
                                   gdesc.appID == id
                             select new GameListViewModel
@@ -188,7 +199,9 @@ namespace MySteamPlay.Controllers
                                 Comment = gdesc.userComments,
                                 UserId = gdesc.userId,
                                 AppId = game.appID,
-                                GameDescId = gdesc.ID
+                                GameDescId = gdesc.ID,
+                                Visible = gdesc.visible,
+                                Tags = taglist
                             };
 
             GameListViewModel foundGame = GameQuery.Single();
@@ -208,7 +221,7 @@ namespace MySteamPlay.Controllers
                 string currentUserID = User.Identity.GetUserId();
                 GameDescrip editedGame = Database.GDescriptions.Where(x => x.userId == currentUserID && x.appID == editGame.AppId).Single();
                 editedGame.userComments = editGame.Comment;
-                Database.SaveChanges();
+                 await Database.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
@@ -225,30 +238,30 @@ namespace MySteamPlay.Controllers
         //    return View(editGame);
         //}
 
-        // GET: GameLists/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            GameList gameList = await Database.GLists.FindAsync(id);
-            if (gameList == null)
-            {
-                return HttpNotFound();
-            }
-            return View(gameList);
-        }
+        //// GET: GameLists/Delete/5
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    GameList gameList = await Database.GLists.FindAsync(id);
+        //    if (gameList == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(gameList);
+        //}
 
-        // POST: GameLists/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            GameList gameList = await Database.GLists.FindAsync(id);
-            Database.GLists.Remove(gameList);
-            await Database.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
+        //// POST: GameLists/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> DeleteConfirmed(int id)
+        //{
+        //    GameList gameList = await Database.GLists.FindAsync(id);
+        //    Database.GLists.Remove(gameList);
+        //    await Database.SaveChangesAsync();
+        //    return RedirectToAction("Index");
+        //}
     }
 }

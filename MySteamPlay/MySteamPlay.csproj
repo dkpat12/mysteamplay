@@ -280,8 +280,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Disclaimer.cshtml" />
     <Content Include="Views\Home\Faq.cshtml" />
-    <Content Include="Views\GameList\Create.cshtml" />
-    <Content Include="Views\GameList\Delete.cshtml" />
     <Content Include="Views\GameList\Details.cshtml" />
     <Content Include="Views\GameList\Edit.cshtml" />
     <Content Include="Views\GameList\Index.cshtml" />

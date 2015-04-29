@@ -17,13 +17,16 @@ namespace MySteamPlay.Models
         [ForeignKey("Game")]
         public int appID { get; set; }             // foreign key from Game, part of composite key
 
+        [ForeignKey("Tags")]
+        public int tagListID { get; set; }
+
         public int playtime_forever { get; set; }   // all the time the owner has ever spent playing this game
 
         public string userComments { get; set; }    // comments by the owner
 
         public bool visible { get; set; }           // if true, game appears in owner's master list
 
-        public virtual List<TagList> Tags { get; set; }
+        public virtual TagList Tags { get; set; }
 
         public virtual Game Game { get; set; }
 
