@@ -10,3 +10,4 @@
 /// <reference path="npm.js" />
 /// <reference path="respond.matchmedia.addListener.js" />
 /// <reference path="bootstrap-toggle.js" />
+/// <reference path="dragdrop.js" />

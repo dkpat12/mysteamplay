@@ -17,7 +17,7 @@ namespace MySteamPlay.Controllers
     public class GameListController : DataBaseController
     {
         // GET: GameLists
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
             // TODO Error Handling for when user is not logged in
             string currentUserID = User.Identity.GetUserId();
@@ -41,7 +41,10 @@ namespace MySteamPlay.Controllers
                                 GameTags = taglist,
                                 AllTags = Database.Tags.ToList()
                             };
-
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                GameQuery = GameQuery.Where(s => s.Name.Contains(searchString));
+            }
             return View(GameQuery);
         }
 

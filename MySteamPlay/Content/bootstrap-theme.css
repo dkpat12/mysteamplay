@@ -7365,3 +7365,12 @@ tbody {
     max-height:600px;
     width:auto; 
 }
+
+
+
+.ui-sortable tr {
+    cursor:pointer;
+}
+.ui-sortable tr:hover {
+
+}
